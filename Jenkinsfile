@@ -8,8 +8,8 @@ pipeline {
                 script{
                     def servers = ['rp1','rp2', 'rp3']
                     def sourceFiles = '*.py'
-                    def destination = '/home/morisfrances/BachelorProject/Software'
-                    def startScript = 'python3 ' +  destination + '/DHT11.py > log.txt'
+                    def destination = '//home/morisfrances/BachelorProject/Software/'
+                    def startScript = 'python3 ' +  destination + 'DHT11.py > '+ destination +'log.txt'
                     for(String server : servers){
                         deploy(server, sourceFiles, destination);
                         executeScript(server, startScript);

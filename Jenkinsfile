@@ -21,8 +21,6 @@ pipeline {
                     def servers = ['rp1','rp2', 'rp3']
                     def sourceFiles = '*.py'
                     def destination = '/BachelorProject/Software/'
-                    def stopScript = './scripts/stop.sh'
-                    def startScript = './scripts/start.sh'
                     for(String server : servers){
                         deploy(server, sourceFiles, destination);
                     }
@@ -35,6 +33,8 @@ pipeline {
                 echo 'Stopping running instance and starting a new one'
                 script{
                     def servers = ['rp1','rp2', 'rp3']
+                    def stopScript = './scripts/stop.sh'
+                    def startScript = './scripts/start.sh'
                     for(String server : servers){
                         executeScript(server, stopScript);
                         executeScript(server, startScript);

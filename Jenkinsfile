@@ -4,7 +4,7 @@ pipeline {
 
         stage('Deploy code to Raspberry Pis') {
             steps {
-
+                echo 'Deploying...'
             }
         }
     }

@@ -5,12 +5,14 @@ pipeline {
         stage('Deploy code to Raspberry Pis') {
             steps {
                 echo 'Deploying...'
-                def servers = ['rp1','rp2', 'rp3']
-                def sourceFiles = './*.py'
-                def destination = '/home/morisfrances/Desktop/BA/project/software/PiCluster'
+                script{
+                    def servers = ['rp1','rp2', 'rp3']
+                    def sourceFiles = './*.py'
+                    def destination = '/home/morisfrances/Desktop/BA/project/software/PiCluster'
 
-                for(String server : servers){
-                    deploy(server, sourceFiles, destination);
+                    for(String server : servers){
+                        deploy(server, sourceFiles, destination);
+                    }
                 }
 
             }

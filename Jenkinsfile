@@ -10,7 +10,7 @@ pipeline {
                     def servers = ['rp1','rp2', 'rp3']
                     def sourceFiles = '*.py'
                     def destination = '//home/morisfrances/BachelorProject/Software/'
-                    def startScript = 'python3 ' +  destination + 'DHT11.py > '+ destination +'log.txt &'
+                    def startScript = 'nohup python3 ' +  destination + 'DHT11.py > '+ destination +'log.txt 2>&1 & echo $! > pid'
                     for(String server : servers){
                         deploy(server, sourceFiles, destination);
                         executeScript(server, startScript);

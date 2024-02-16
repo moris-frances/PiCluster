@@ -7,7 +7,7 @@ pipeline {
                 echo 'Deploying...'
                 script{
                     def servers = ['rp1','rp2', 'rp3']
-                    def sourceFiles = './*.py'
+                    def sourceFiles = '*.py'
                     def destination = '/home/morisfrances/Desktop/BA/project/software/PiCluster'
 
                     for(String server : servers){

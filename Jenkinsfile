@@ -25,20 +25,20 @@ pipeline {
         }
     }
 
-    def deploy(server, sourceFiles, destination){
+}
+def deploy(server, sourceFiles, destination){
 
-                sshPublisher(
-                    publishers: 
-                        [sshPublisherDesc(configName: server, 
-                            transfers: 
-                                [sshTransfer(
-                                    cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, 
-                                    makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', 
-                                    remoteDirectory: destination, 
-                                    remoteDirectorySDF: false, removePrefix: '', sourceFiles: sourceFiles)
-                                ],
-                        usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)
-                        ]
-                )
-    }
+            sshPublisher(
+                publishers: 
+                    [sshPublisherDesc(configName: server, 
+                        transfers: 
+                            [sshTransfer(
+                                cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, 
+                                makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', 
+                                remoteDirectory: destination, 
+                                remoteDirectorySDF: false, removePrefix: '', sourceFiles: sourceFiles)
+                            ],
+                    usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)
+                    ]
+            )
 }

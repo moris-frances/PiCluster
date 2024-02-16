@@ -9,7 +9,7 @@ pipeline {
                     def servers = ['rp1','rp2', 'rp3']
                     def sourceFiles = '*.py'
                     def destination = '/home/morisfrances/Desktop/BA/project/software/PiCluster'
-                    def startScript = 'python3 DHT11.py > log.txt'
+                    def startScript = 'python3 ' +  destination + '/DHT11.py > log.txt'
                     for(String server : servers){
                         deploy(server, sourceFiles, destination);
                         executeScript(server, startScript);
@@ -37,7 +37,7 @@ def deploy(server, sourceFiles, destination){
                         transfers: 
                             [sshTransfer(
                                 cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, 
-                                makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', 
+                                makeEmptyDirs: true, noDefaultExcludes: false, patternSeparator: '[, ]+', 
                                 remoteDirectory: destination, 
                                 remoteDirectorySDF: false, removePrefix: '', sourceFiles: sourceFiles)
                             ],
@@ -54,7 +54,7 @@ def executeScript(server, script){
                         transfers: 
                             [sshTransfer(
                                 cleanRemote: false, excludes: '', execCommand: script, execTimeout: 120000, flatten: false, 
-                                makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', 
+                                makeEmptyDirs: true, noDefaultExcludes: false, patternSeparator: '[, ]+', 
                                 remoteDirectory: '', 
                                 remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')
                             ],

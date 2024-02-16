@@ -21,7 +21,7 @@ pipeline {
                     def servers = ['rp1','rp2', 'rp3']
                     def sourceFiles = '*.py'
                     def destination = '/BachelorProject/Software/'
-                    def startScript = './scripts/stop.sh'
+                    def stopScript = './scripts/stop.sh'
                     def startScript = './scripts/start.sh'
                     for(String server : servers){
                         deploy(server, sourceFiles, destination);

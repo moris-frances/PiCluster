@@ -1,19 +1,19 @@
 pipeline {
     agent any
     stages {
-        stage('Setup Raspberry Pis') {
-                steps {
-                    echo 'Installing dependacies and setting project folders up'
-                    script{
-                        def servers = ['rp1','rp2', 'rp3']
-                        def script = './scripts/setup.sh'
-                        for(String server : servers){
-                            executeScript(server, script);
-                        }
-                    }
+        // stage('Setup Raspberry Pis') {
+        //         steps {
+        //             echo 'Installing dependacies and setting project folders up'
+        //             script{
+        //                 def servers = ['rp1','rp2', 'rp3']
+        //                 def script = './scripts/setup.sh'
+        //                 for(String server : servers){
+        //                     executeScript(server, script);
+        //                 }
+        //             }
 
-                }
-        }
+        //         }
+        // }
         stage('Deploy code to Raspberry Pis') {
             steps {
                 echo 'Deploying...'
@@ -25,8 +25,6 @@ pipeline {
                     def startScript = './scripts/start.sh'
                     for(String server : servers){
                         deploy(server, sourceFiles, destination);
-                        executeScript(server, stopScript);
-                        executeScript(server, startScript);
                     }
                 }
 

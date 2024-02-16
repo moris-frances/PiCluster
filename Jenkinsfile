@@ -1,18 +1,44 @@
 pipeline {
     agent any
     stages {
+        stage('Setup Raspberry Pis') {
+                steps {
+                    echo 'Installing dependacies and setting project folders up'
+                    script{
+                        def servers = ['rp1','rp2', 'rp3']
+                        def script = './scripts/setup.sh'
+                        for(String server : servers){
+                            executeScript(server, script);
+                        }
+                    }
 
-
+                }
+        }
         stage('Deploy code to Raspberry Pis') {
             steps {
                 echo 'Deploying...'
                 script{
                     def servers = ['rp1','rp2', 'rp3']
                     def sourceFiles = '*.py'
-                    def destination = '//home/morisfrances/BachelorProject/Software/'
-                    def startScript = 'nohup python3 ' +  destination + 'DHT11.py > '+ destination +'log.txt 2>&1 & echo $! > pid'
+                    def destination = '/BachelorProject/Software/'
+                    def startScript = './scripts/stop.sh'
+                    def startScript = './scripts/start.sh'
                     for(String server : servers){
                         deploy(server, sourceFiles, destination);
+                        executeScript(server, stopScript);
+                        executeScript(server, startScript);
+                    }
+                }
+
+            }
+        }
+        stage('Deploy code to Raspberry Pis') {
+            steps {
+                echo 'Stopping running instance and starting a new one'
+                script{
+                    def servers = ['rp1','rp2', 'rp3']
+                    for(String server : servers){
+                        executeScript(server, stopScript);
                         executeScript(server, startScript);
                     }
                 }
@@ -20,29 +46,6 @@ pipeline {
             }
         }
 
-        //     stage('Setup Raspberry Pis') {
-        //     steps {
-        //         echo 'Deploying...'
-        //         script{
-        //             def servers = ['rp1','rp2', 'rp3']
-        //             def sourceFiles = '*.py'
-        //             def destination = '//home/morisfrances/BachelorProject/Software/'
-        //             def startScript = 'python3 ' +  destination + 'DHT11.py > '+ destination +'log.txt'
-        //             def scripts = ['sudo apt-get update',
-        //                             'sudo apt-get install build-essential python-dev',
-        //                             'sudo apt install gpiod',           
-        //                             'sudo apt install python3-pip',
-        //                             'sudo pip3 install adafruit-circuitpython-dht',
-        //                             'mkdir ']
-        //             for(String server : servers){
-        //                 for(String script : scripts){
-        //                     executeScript(server, script);
-        //                 }
-        //             }
-        //         }
-
-        //     }
-        // }
     }
     post{
         success{
@@ -78,7 +81,7 @@ def executeScript(server, script){
                     [sshPublisherDesc(configName: server, 
                         transfers: 
                             [sshTransfer(
-                                cleanRemote: false, excludes: '', execCommand: script, execTimeout: 120000, flatten: false, 
+                                cleanRemote: false, excludes: '', execCommand: script, execTimeout: 1000000, flatten: false, 
                                 makeEmptyDirs: true, noDefaultExcludes: false, patternSeparator: '[, ]+', 
                                 remoteDirectory: '', 
                                 remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')

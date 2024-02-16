@@ -32,7 +32,7 @@ pipeline {
 
             }
         }
-        stage('Deploy code to Raspberry Pis') {
+        stage('Start newly deployed scripts on the Raspberry Pis') {
             steps {
                 echo 'Stopping running instance and starting a new one'
                 script{

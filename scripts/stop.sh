@@ -1,4 +1,5 @@
 #!/bin/bash
 
 DESTINATION="/home/morisfrances/BachelorProject/Software"
-kill $DESTINATION/pid
+kill $(cat $DESTINATION/pid)
+rm $DESTINATION/log.txt

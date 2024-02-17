@@ -1,4 +1,4 @@
 #!/bin/bash
 
-DESTINATION="/BachelorProject/Software/"
-kill $DESTINATIONpid
+DESTINATION="/BachelorProject/Software"
+kill $DESTINATION/pid

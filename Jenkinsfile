@@ -19,10 +19,12 @@ pipeline {
                 echo 'Deploying...'
                 script{
                     def servers = ['rp1','rp2', 'rp3']
-                    def sourceFiles = '*.py'
-                    def destination = '/BachelorProject/Software/'
+                    def pyFiles = '*.py'
+                    def scriptFiles = 'scripts/*.sh'
+                    def destination = '//home/morisfrances/BachelorProject/Software/'
                     for(String server : servers){
-                        deploy(server, sourceFiles, destination);
+                        deploy(server, pyFiles, destination);
+                        deploy(server, scriptFiles, destination);
                     }
                 }
 
@@ -33,9 +35,13 @@ pipeline {
                 echo 'Stopping running instance and starting a new one'
                 script{
                     def servers = ['rp1','rp2', 'rp3']
-                    def stopScript = './scripts/stop.sh'
-                    def startScript = './scripts/start.sh'
+                    def destination = '//home/morisfrances/BachelorProject/Software/'
+                    
+                    def stopScript = destination + 'scripts/stop.sh'
+                    def startScript = destination + 'scripts/start.sh'
+                    def chmodScript = 'chmod ugo+x ' + stopScript + ' ' + startScript
                     for(String server : servers){
+                        executeScript(server, chmodScript);
                         executeScript(server, stopScript);
                         executeScript(server, startScript);
                     }

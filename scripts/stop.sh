@@ -2,4 +2,5 @@
 
 DESTINATION="/home/morisfrances/BachelorProject/Software"
 kill $(cat $DESTINATION/pid)
+kill $(pgrep libgpiod_pulsei)
 rm $DESTINATION/log.txt

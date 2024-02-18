@@ -1,15 +1,17 @@
 import time
 import board
 import adafruit_dht
+import RPi.GPIO as GPIO
 # Initialisieren Sie den DHT, wobei der Datenpin mit Pin 16
 # (GPIO 23) des Raspberry Pi verbunden ist:
-dhtDevice = adafruit_dht.DHT11(board.D24, use_pulseio=False)
+dhtDevice = adafruit_dht.DHT11(board.D23)
 # Sie können DHT22 use_pulseio=False übergeben, wenn Sie
 # pulseio nicht verwenden möchten.
 # Dies kann auf einem Linux-Einplatinencomputer wie dem
 # Raspberry Pi notwendig sein, aber es wird nicht
 # in CircuitPython funktionieren.
 # dhtDevice = adafruit_dht.DHT22(board.D18, use_pulseio=False)
+GPIO.cleanup()
 while True:
     try:
         # Ausgabe der Werte über die serielle Schnittstelle

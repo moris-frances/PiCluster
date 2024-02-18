@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 # Initialisieren Sie den DHT, wobei der Datenpin mit Pin 16
 # (GPIO 23) des Raspberry Pi verbunden ist:
 GPIO.cleanup()
-dhtDevice = adafruit_dht.DHT11(board.D23)
+dhtDevice = adafruit_dht.DHT11(board.D23, use_pulseio=False)
 # Sie können DHT22 use_pulseio=False übergeben, wenn Sie
 # pulseio nicht verwenden möchten.
 # Dies kann auf einem Linux-Einplatinencomputer wie dem

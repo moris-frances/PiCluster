@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment { 
+      def servers = ['rp1','rp2', 'rp3']
+    }
     stages {
         // stage('Setup Raspberry Pis') {
         //         steps {
@@ -18,7 +21,7 @@ pipeline {
             steps {
                 echo 'Deploying...'
                 script{
-                    def servers = ['rp1','rp2', 'rp3']
+                    
                     def pyFiles = '*.py'
                     def scriptFiles = 'scripts/*.sh'
                     def destination = '//home/morisfrances/BachelorProject/Software/'
@@ -34,9 +37,8 @@ pipeline {
             steps {
                 echo 'Stopping running instance and starting a new one'
                 script{
-                    def servers = ['rp1','rp2', 'rp3']
+                    // def servers = ['rp1','rp2', 'rp3']
                     def destination = '//home/morisfrances/BachelorProject/Software/'
-                    
                     def stopScript = destination + 'scripts/stop.sh'
                     def startScript = destination + 'scripts/start.sh'
                     def chmodScript = 'chmod ugo+x ' + stopScript + ' ' + startScript

@@ -1,10 +1,14 @@
 #!bin/sh
 
-sudo apt-get update
-sudo apt-get install build-essential python-dev
-sudo apt install gpiod        
-sudo apt install python3-pip
-sudo pip3 install adafruit-circuitpython-dht
+sudo apt-get update -y
+sudo apt-get install build-essential python-dev -y
+sudo apt install gpiod -y 
+sudo apt install python3-pip -y
+sudo pip3 install adafruit-circuitpython-dht -y
+sudo apt install mpich -y
+sudo apt-get install libopenmpi-dev -y
+sudo pip3 install mpi4py
+
 
 cd /home/morisfrances/
 mkdir BachelorProject

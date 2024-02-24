@@ -1,7 +1,8 @@
 pipeline {
     agent any
     environment { 
-      def servers = ['rp1','rp2', 'rp3']
+      servers = ['rp1','rp2', 'rp3']
+      destination = '//home/morisfrances/BachelorProject/Software/'
     }
     stages {
         // stage('Setup Raspberry Pis') {
@@ -24,10 +25,9 @@ pipeline {
                     
                     def pyFiles = '*.py'
                     def scriptFiles = 'scripts/*.sh'
-                    def destination = '//home/morisfrances/BachelorProject/Software/'
-                    for(String server : servers){
-                        deploy(server, pyFiles, destination);
-                        deploy(server, scriptFiles, destination);
+                    for(String server : env.servers){
+                        deploy(server, pyFiles, env.destination);
+                        deploy(server, scriptFiles, env.destination);
                     }
                 }
 
@@ -38,11 +38,11 @@ pipeline {
                 echo 'Stopping running instance and starting a new one'
                 script{
                     // def servers = ['rp1','rp2', 'rp3']
-                    def destination = '//home/morisfrances/BachelorProject/Software/'
+                    // def destination = '//home/morisfrances/BachelorProject/Software/'
                     def stopScript = destination + 'scripts/stop.sh'
                     def startScript = destination + 'scripts/start.sh'
                     def chmodScript = 'chmod ugo+x ' + stopScript + ' ' + startScript
-                    for(String server : servers){
+                    for(String server : env.servers){
                         executeScript(server, chmodScript);
                         executeScript(server, stopScript);
                         executeScript(server, startScript);

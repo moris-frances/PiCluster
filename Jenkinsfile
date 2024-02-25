@@ -31,6 +31,19 @@ pipeline {
 
             }
         }
+        stage('Reboot the Raspberry Pis') {
+            steps {
+                echo 'Rebooting Raspberry Pis'
+                script{
+                    def servers = ['rp1','rp2', 'rp3']
+                    for(String server : servers){
+                        executeScript(server, 'sudo reboot');
+                    }
+                    sleep(10)
+                }
+
+            }
+        }
         stage('Start newly deployed scripts on the Raspberry Pis') {
             steps {
                 echo 'Stopping running instance and starting a new one'

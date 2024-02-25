@@ -37,7 +37,7 @@ pipeline {
                 script{
                     def servers = ['rp1','rp2', 'rp3']
                     for(String server : servers){
-                        executeScript(server, 'sudo reboot');
+                        executeScript(server, 'sleep 1;sudo reboot');
                     }
                     sleep(10)
                 }

@@ -22,10 +22,10 @@ pipeline {
                     def servers = ['rp1','rp2', 'rp3']
                     def mpiHostfile = 'mpiHostfile'
                     def destination = '//home/morisfrances/BachelorProject/Software/'
-                    def mpiHostFileGenScript = 'echo -e '
+                    def mpiHostFileGenScript = 'echo '
                     //generate server mpiHostFile Generation script
                     for(String server : servers){
-                        mpiHostFileGenScript = mpiHostFileGenScript + '''\"$(nmap ''' + server + '''.local -oG - | awk '/Up$/{print $2}' | sort -V) ''' + '\\n '
+                        mpiHostFileGenScript = mpiHostFileGenScript + '\"$(nmap ' + server + '''.local -oG - | awk '/Up$/{print $2}' | sort -V) ''' + '''\n'''
                     }
                     echo(mpiHostFileGenScript)
                     mpiHostFileGenScript = mpiHostFileGenScript + '\" > ' + mpiHostfile

@@ -28,7 +28,7 @@ def main():
 
     # Gather results
     all_primes = comm.gather(primes, root=0)
-    if rank = 0:
+    if rank == 0:
         print(all_primes)
     if rank == 0:
         end_time = time.time()

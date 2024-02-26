@@ -11,22 +11,12 @@ def calculate_primes(start, end):
 
 def main():
     comm = MPI.COMM_WORLD
+    
     rank = comm.Get_rank()
     size = comm.Get_size()
-
-    if len(sys.argv) != 2:
-        print("Usage: mpiexec -n <num_processes> python my_script.py <memory>")
-        return
-
-    memory = sys.argv[1]
-    if memory == '1GB':
-        start = 2
-        end = 30000  # Smaller range for lower memory usage
-    else:
-        print("Memory must be '1GB' for Raspberry Pi")
-        return
-
-    print(f"Running with {memory} of RAM")
+    
+    start = 2
+    end = 30000 
 
     start_time = time.time()
 

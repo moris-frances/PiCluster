@@ -27,7 +27,8 @@ pipeline {
                     for(String server : servers){
                         mpiHostFileGenScript = mpiHostFileGenScript + '''$(nmap ''' + server + '''.local -oG - | awk '/Up$/{print $2}' | sort -V)\n'''
                     }
-                    mpiHostFileGenScript = mpiHostFileGenScript + '>' + mpiHostfile
+                    echo(mpiHostFileGenScript)
+                    mpiHostFileGenScript = mpiHostFileGenScript + ' > ' + mpiHostfile
                     sh(mpiHostFileGenScript)
                     for(String server : servers){
                         deploy(server, mpiHostfile, destination);

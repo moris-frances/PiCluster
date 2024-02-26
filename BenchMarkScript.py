@@ -4,8 +4,6 @@ import sys
 import board
 import adafruit_dht
  
-dht_device = adafruit_dht.DHT11(board.D23)
-
 def calculate_primes(start, end, all_temperature_humidity):
     # Dummy operation using temperature and humidity
     for temperature_humidity in all_temperature_humidity:
@@ -17,6 +15,7 @@ def calculate_primes(start, end, all_temperature_humidity):
     return primes
 
 def read_sensor():
+    dht_device = adafruit_dht.DHT11(board.D23)
     while True:
         try:
             temperature_c = dht_device.temperature

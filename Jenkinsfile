@@ -123,7 +123,7 @@ def executeScript(server, script){
                     [sshPublisherDesc(configName: server, 
                         transfers: 
                             [sshTransfer(
-                                cleanRemote: false, excludes: '', execCommand: script, execTimeout: 1000000, flatten: false, 
+                                cleanRemote: false, excludes: '', execCommand: script, execTimeout: 100000, flatten: false, 
                                 makeEmptyDirs: true, noDefaultExcludes: false, patternSeparator: '[, ]+', 
                                 remoteDirectory: '', 
                                 remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')

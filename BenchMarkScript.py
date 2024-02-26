@@ -11,12 +11,12 @@ def calculate_primes(start, end):
 
 def main():
     comm = MPI.COMM_WORLD
-    
+
     rank = comm.Get_rank()
     size = comm.Get_size()
     
     start = 2
-    end = 30000 
+    end = 300000 
 
     start_time = time.time()
 

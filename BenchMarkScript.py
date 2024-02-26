@@ -7,7 +7,7 @@ import adafruit_dht
 def calculate_primes(start, end, all_temperature_humidity):
     # Dummy operation using temperature and humidity
     for temperature_humidity in all_temperature_humidity:
-        dummy_value = (temperature_humidity.temperature_c + temperature_humidity.humidity) % 10
+        dummy_value = (temperature_humidity[0] + temperature_humidity[1]) % 10
     primes = []
     for num in range(start, end + 1):
         if all(num % i != 0 for i in range(2, int(num**0.5) + 1)):
@@ -26,7 +26,7 @@ def read_sensor():
             print(error.args[0])
             continue
         except Exception as error:
-            dhtDevice.exit()
+            dht_device.exit()
             raise error
     return temperature_c, humidity
 

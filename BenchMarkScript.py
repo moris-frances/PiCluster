@@ -4,12 +4,10 @@ import sys
 import board
 import adafruit_dht
 
-dhtDevice = adafruit_dht.DHT11(board.D23)
-
-def calculate_primes(start, end, temperature_humidity):
+def calculate_primes(start, end, all_temperature_humidity):
     # Dummy operation using temperature and humidity
-    dummy_value = (temperature_humidity.temperature_c + temperature_humidity.humidity) % 10
-    
+    for temperature_humidity in all_temperature_humidity:
+        dummy_value = (temperature_humidity.temperature_c + temperature_humidity.humidity) % 10
     primes = []
     for num in range(start, end + 1):
         if all(num % i != 0 for i in range(2, int(num**0.5) + 1)):

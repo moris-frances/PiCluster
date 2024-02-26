@@ -25,10 +25,10 @@ pipeline {
                     def mpiHostFileGenScript = 'echo -e '
                     //generate server mpiHostFile Generation script
                     for(String server : servers){
-                        mpiHostFileGenScript = mpiHostFileGenScript + '''$(nmap ''' + server + '''.local -oG - | awk '/Up$/{print $2}' | sort -V) ''' + '\\n '
+                        mpiHostFileGenScript = mpiHostFileGenScript + '''"$(nmap ''' + server + '''.local -oG - | awk '/Up$/{print $2}' | sort -V) ''' + '\\n '
                     }
                     echo(mpiHostFileGenScript)
-                    mpiHostFileGenScript = mpiHostFileGenScript + ' > ' + mpiHostfile
+                    mpiHostFileGenScript = mpiHostFileGenScript + '" > ' + mpiHostfile
                     sh(mpiHostFileGenScript)
                     for(String server : servers){
                         deploy(server, mpiHostfile, destination);

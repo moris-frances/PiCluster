@@ -15,6 +15,27 @@ pipeline {
 
         //         }
         // }
+        stage('Generate mpiHostfile and deploy') {
+            steps {
+                echo 'Deploying...'
+                script{
+                    def servers = ['rp1','rp2', 'rp3']
+                    def mpiHostfile = 'mpiHostfile'
+                    def destination = '//home/morisfrances/BachelorProject/Software/'
+                    def mpiHostFileGenScript = 'echo '
+                    //generate server mpiHostFile Generation script
+                    for(String server : servers){
+                        mpiHostFileGenScript = mpiHostFileGenScript + '''$(nmap ''' + server + '''.local -oG - | awk '/Up$/{print $2}' | sort -V)\n'''
+                    }
+                    mpiHostFileGenScript = mpiHostFileGenScript + '>' + mpiHostfile
+                    sh(mpiHostFileGenScript)
+                    for(String server : servers){
+                        deploy(server, mpiHostfile, destination);
+                    }
+                }
+
+            }
+        }
         stage('Deploy code to Raspberry Pis') {
             steps {
                 echo 'Deploying...'
@@ -22,10 +43,12 @@ pipeline {
                     def servers = ['rp1','rp2', 'rp3']
                     def pyFiles = '*.py'
                     def scriptFiles = 'scripts/*.sh'
+                    def mpiHostfile = 'mpiHostfile'
                     def destination = '//home/morisfrances/BachelorProject/Software/'
                     for(String server : servers){
-                        deploy(server, pyFiles, destination);
+                        deploy(server, mpiHostfile, destination);
                         deploy(server, scriptFiles, destination);
+                        deploy(server, pyFiles, destination);
                     }
                 }
 

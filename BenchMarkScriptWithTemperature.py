@@ -53,12 +53,12 @@ def main():
 
     rank = comm.Get_rank()
     size = comm.Get_size()
-    
-    # Poll every device for temperature and humidity values
-    all_temperature = get_sensor_readings_from_files(nfs_dir, tempFileSuffix)
-    # all_temperature = comm.gather(temperature, root=0)  
-    print("Gatered themperature: ")
-    print(all_temperature)
+    if rank == 0:
+        # Poll every device for temperature and humidity values
+        all_temperature = get_sensor_readings_from_files(nfs_dir, tempFileSuffix)
+        # all_temperature = comm.gather(temperature, root=0)  
+        print("Gatered themperature: ")
+        print(all_temperature)
 
     start = 2
     end = 300000 

@@ -1,17 +1,7 @@
 pipeline {
     agent any
+    
     stages {
-        stage('Read Configuration') {
-            steps {
-                script {
-                    // Read configuration from the JSON file
-                    echo "Reading configuration..."
-                    def config = readJSON file: 'config.json'
-                    env.DESTINATION = config.destinationFolder
-                    env.SERVERS = config.nodes.join(',').replaceAll('"', '')
-                }
-            }
-        }
         // stage('Setup Raspberry Pis') {
         //         steps {
         //             echo 'Installing dependacies and setting project folders up'
@@ -29,9 +19,9 @@ pipeline {
             steps {
                 echo 'Deploying...'
                 script{
-                    def servers = env.SERVERS.tokenize(',').
+                    def servers = ['rp1','rp2', 'rp3']
                     def mpiHostfile = 'mpiHostfile'
-                    def destination = '/' + env.DESTINATION
+                    def destination = '//home/morisfrances/BachelorProject/Software/'
                     def mpiHostFileGenScript = 'echo \"'
                     //generate server mpiHostFile Generation script
                     for(String server : servers){
@@ -51,12 +41,12 @@ pipeline {
             steps {
                 echo 'Deploying...'
                 script{
-                    def servers = env.SERVERS.tokenize(',')
+                    def servers = ['rp1','rp2', 'rp3']
                     def pyFiles = '*.py'
                     def scriptFiles = 'scripts/*.sh'
                     def mpiHostfile = 'mpiHostfile'
                     def configFile = 'config.json'
-                    def destination = '/' + env.DESTINATION
+                    def destination = '//home/morisfrances/BachelorProject/Software/'
                     for(String server : servers){
                         deploy(server, mpiHostfile, destination);
                         deploy(server, scriptFiles, destination);

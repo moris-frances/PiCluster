@@ -45,10 +45,12 @@ pipeline {
                     def pyFiles = '*.py'
                     def scriptFiles = 'scripts/*.sh'
                     def mpiHostfile = 'mpiHostfile'
+                    def configFile - 'config.json'
                     def destination = '//home/morisfrances/BachelorProject/Software/'
                     for(String server : servers){
                         deploy(server, mpiHostfile, destination);
                         deploy(server, scriptFiles, destination);
+                        deploy(server, configFile, destination);
                         deploy(server, pyFiles, destination);
                     }
                 }

@@ -1,7 +1,10 @@
 from mpi4py import MPI
 import time
 import sys
- 
+import os
+
+nfs_dir = "/nfsDir"
+tempFileSuffix = "TempValue"
 def calculate_primes(start, end, all_temperature):
     # Dummy operation using temperature and humidity
     for temperature in all_temperature:
@@ -12,20 +15,38 @@ def calculate_primes(start, end, all_temperature):
             primes.append(num)
     return primes
 
-def get_sensor_readings():
-    try:
-        with open("./tempValue.txt", "r") as file:
-            value = file.read().strip()  # Read the content and strip any whitespace
-            return int(value)  # Convert the string to an integer and return it
-    except FileNotFoundError:
-        print("File not found.")
-        return None
-    except ValueError:
-        print("Invalid value in file.")
-        return None
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return None
+# def get_sensor_readings():
+#     try:
+#         with open("./tempValue.txt", "r") as file:
+#             value = file.read().strip()  # Read the content and strip any whitespace
+#             return int(value)  # Convert the string to an integer and return it
+#     except FileNotFoundError:
+#         print("File not found.")
+#         return None
+#     except ValueError:
+#         print("Invalid value in file.")
+#         return None
+#     except Exception as e:
+#         print(f"An error occurred: {e}")
+#         return None
+    
+def get_sensor_readings_from_files(nfs_dir, tempFileSuffix):
+    """
+    Reads all files in the specified directory that end with 'TempValue' in their names.
+    Returns an array of the contents of these files.
+    """
+    temp_values = []
+    for filename in os.listdir(nfs_dir):
+        if filename.endswith(tempFileSuffix):
+            with open(os.path.join(nfs_dir, filename), 'r') as file:
+                content = file.read()
+                try:
+                    temp_value = int(content.strip())
+                    temp_values.append(temp_value)
+                except ValueError:
+                    # Ignore files with non-integer contents
+                    continue
+    return temp_values
 
 def main():
     comm = MPI.COMM_WORLD
@@ -34,8 +55,8 @@ def main():
     size = comm.Get_size()
     
     # Poll every device for temperature and humidity values
-    temperature = get_sensor_readings()
-    all_temperature = comm.gather(temperature, root=0)  
+    all_temperature = get_sensor_readings_from_files(nfs_dir, tempFileSuffix)
+    # all_temperature = comm.gather(temperature, root=0)  
     print("Gatered themperature: ")
     print(all_temperature)
 

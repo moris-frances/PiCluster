@@ -55,41 +55,41 @@ pipeline {
 
             }
         }
-        stage('Reboot the Raspberry Pis') {
-            steps {
-                echo 'Rebooting Raspberry Pis'
-                script{
-                    def servers = ['rp1','rp2', 'rp3']
-                    for(String server : servers){
-                        executeScript(server, '(sleep 1 ; sudo reboot) &');
-                    }
-                    sleep(25)
-                }
+        // stage('Reboot the Raspberry Pis') {
+        //     steps {
+        //         echo 'Rebooting Raspberry Pis'
+        //         script{
+        //             def servers = ['rp1','rp2', 'rp3']
+        //             for(String server : servers){
+        //                 executeScript(server, '(sleep 1 ; sudo reboot) &');
+        //             }
+        //             sleep(25)
+        //         }
 
-            }
-        }
-        stage('Start newly deployed scripts on the Raspberry Pis') {
-            steps {
-                echo 'Stopping running instance and starting a new one'
-                script{
-                    def servers = ['rp1','rp2', 'rp3']
-                    def destination = '//home/morisfrances/BachelorProject/Software/'
+        //     }
+        // }
+        // stage('Start newly deployed scripts on the Raspberry Pis') {
+        //     steps {
+        //         echo 'Stopping running instance and starting a new one'
+        //         script{
+        //             def servers = ['rp1','rp2', 'rp3']
+        //             def destination = '//home/morisfrances/BachelorProject/Software/'
                     
-                    def stopScript = destination + 'scripts/stop.sh'
-                    def startScript = destination + 'scripts/start.sh'
-                    def chmodScript = 'chmod ugo+x ' + stopScript + ' ' + startScript
-                    def mountScript = "sudo mount " + servers[0] + ".local:/nfsDir /nfsDir"
-                    executeScript(servers[0], "sudo systemctl restart nfs-kernel-server")
-                    for(String server : servers){
-                        executeScript(server, mountScript)
-                        executeScript(server, chmodScript);
-                        executeScript(server, stopScript);
-                        executeScript(server, startScript);
-                    }
-                }
+        //             def stopScript = destination + 'scripts/stop.sh'
+        //             def startScript = destination + 'scripts/start.sh'
+        //             def chmodScript = 'chmod ugo+x ' + stopScript + ' ' + startScript
+        //             def mountScript = "sudo mount " + servers[0] + ".local:/nfsDir /nfsDir"
+        //             executeScript(servers[0], "sudo systemctl restart nfs-kernel-server")
+        //             for(String server : servers){
+        //                 executeScript(server, mountScript)
+        //                 executeScript(server, chmodScript);
+        //                 executeScript(server, stopScript);
+        //                 executeScript(server, startScript);
+        //             }
+        //         }
 
-            }
-        }
+        //     }
+        // }
 
     }
     post{

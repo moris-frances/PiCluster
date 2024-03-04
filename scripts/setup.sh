@@ -1,4 +1,4 @@
-#!bin/sh
+#!/bin/bash
 
 sudo apt-get update -y
 sudo apt-get install build-essential python-dev -y

@@ -78,7 +78,7 @@ pipeline {
                     def stopScript = destination + 'scripts/stop.sh'
                     def startScript = destination + 'scripts/start.sh'
                     def chmodScript = 'chmod ugo+x ' + stopScript + ' ' + startScript
-                    def mountScript = "sudo mount" + servers[0] + ".local:/nfsDir /nfsDir"
+                    def mountScript = "sudo mount " + servers[0] + ".local:/nfsDir /nfsDir"
                     executeScript(servers[0], "sudo systemctl restart nfs-kernel-server")
                     for(String server : servers){
                         executeScript(server, mountScript)

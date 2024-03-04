@@ -113,8 +113,7 @@ def deploy(server, sourceFiles, destination){
                             ],
                     usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)
                     ]
-            )
-}
+            )directory_path
 
 def executeScript(server, script){
 

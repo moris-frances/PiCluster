@@ -1,4 +1,11 @@
 {
+    "destinationFolder":"/home/morisfrances/BachelorProject/Software",
     "nfs_dir": "/nfsDir",
-    "tempFileSuffix": "TempValue"
+    "tempFileSuffix": "TempValue",
+    "nodes":
+    [
+        "rp1", 
+        "rp2",
+        "rp3"
+    ]
 }

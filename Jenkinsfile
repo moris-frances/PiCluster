@@ -81,7 +81,7 @@ pipeline {
                     def mountScript = "sudo mount" + servers[0] + ".local:/nfsDir /nfsDir"
                     executeScript(servers[0], "sudo systemctl restart nfs-kernel-server")
                     for(String server : servers){
-                        executescript(server, mountScript)
+                        executeScript(server, mountScript)
                         executeScript(server, chmodScript);
                         executeScript(server, stopScript);
                         executeScript(server, startScript);

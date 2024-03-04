@@ -63,7 +63,7 @@ pipeline {
                     for(String server : servers){
                         executeScript(server, '(sleep 1 ; sudo reboot) &');
                     }
-                    sleep(15)
+                    sleep(25)
                 }
 
             }

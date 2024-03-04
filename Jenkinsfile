@@ -8,7 +8,7 @@ pipeline {
                     echo "Reading configuration..."
                     def config = readJSON file: 'config.json'
                     env.DESTINATION = config.destinationFolder
-                    env.SERVERS = config.nodes.join(',')
+                    env.SERVERS = config.nodes.join(',').replaceAll('"', '')
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 echo 'Deploying...'
                 script{
-                    def servers = env.SERVERS.tokenize(',')
+                    def servers = env.SERVERS.tokenize(',').
                     def mpiHostfile = 'mpiHostfile'
                     def destination = '/' + env.DESTINATION
                     def mpiHostFileGenScript = 'echo \"'

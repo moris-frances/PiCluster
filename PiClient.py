@@ -12,7 +12,7 @@ import socket
 # Initialize the DHT11 sensor; D23 refers to the GPIO pin the sensor is connected to
 dhtDevice = adafruit_dht.DHT11(board.D23)
 # Server URK
-url = "pop-os.local:8084/uploadValue"
+url = "http://pop-os.local:8084/uploadValue"
 # Get the hostname of the device for file naming
 deviceName = socket.gethostname()
 

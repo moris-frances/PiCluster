@@ -1,5 +1,7 @@
 #!/bin/bash
 sudo mount rp1.local:/nfsDir /nfsDir
+sudo exportfs -a
+sudo systemctl start nfs-kernel-server.service
 #Reading the destination(working directory) folder name from the "config.json" file
 DESTINATION=$(cat ../config.json | jq -r ".destinationFolder")
 #Reading the NFS directory(shared directory) folder name from the "config.json" file

@@ -1,6 +1,6 @@
 {
     "destinationFolder":"/home/morisfrances/BachelorProject/Software",
-    "nfs_dir": "/nfsDir",
+    "nfs_dir": "/nfsDir/",
     "tempFileSuffix": "TempValue",
     "nodes":
     [
